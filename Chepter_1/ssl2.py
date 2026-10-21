@@ -30,9 +30,11 @@ class SLL:
 
         temp.next = new_node
 
-    # Insert at given position
+    # Insert at position
     def insert_position(self, data, pos):
-        if pos < 1:
+        total = self.get_count()
+
+        if pos < 1 or pos > total + 1:
             print("Invalid position")
             return
 
@@ -46,14 +48,7 @@ class SLL:
         temp = self.head
 
         for i in range(pos - 2):
-            if temp is None:
-                print("Invalid position")
-                return
             temp = temp.next
-
-        if temp is None:
-            print("Invalid position")
-            return
 
         new_node.next = temp.next
         temp.next = new_node
@@ -83,13 +78,11 @@ class SLL:
 
         temp.next = None
 
-    # Delete at given position
+    # Delete at position
     def delete_position(self, pos):
-        if self.head is None:
-            print("Linked List is empty")
-            return
+        total = self.get_count()
 
-        if pos < 1:
+        if pos < 1 or pos > total:
             print("Invalid position")
             return
 
@@ -100,18 +93,54 @@ class SLL:
         temp = self.head
 
         for i in range(pos - 2):
-            if temp.next is None:
-                print("Invalid position")
-                return
             temp = temp.next
-
-        if temp.next is None:
-            print("Invalid position")
-            return
 
         temp.next = temp.next.next
 
-    # Display linked list
+    # Search
+    def search(self, key):
+        temp = self.head
+        pos = 1
+
+        while temp is not None:
+            if temp.data == key:
+                print("Value found at position", pos)
+                return
+
+            temp = temp.next
+            pos += 1
+
+        print("Value not found")
+
+    # Count nodes
+    def get_count(self):
+        c = 0
+        temp = self.head
+
+        while temp is not None:
+            c += 1
+            temp = temp.next
+
+        return c
+
+    def count(self):
+        print("Total nodes =", self.get_count())
+
+    # Reverse linked list
+    def reverse(self):
+        prev = None
+        curr = self.head
+
+        while curr is not None:
+            next_node = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next_node
+
+        self.head = prev
+        print("Linked List reversed successfully")
+
+    # Display
     def display(self):
         if self.head is None:
             print("Linked List is empty")
@@ -138,7 +167,10 @@ while True:
     print("5. Delete Last")
     print("6. Delete at Position")
     print("7. Display")
-    print("8. Exit")
+    print("8. Count")
+    print("9. Search")
+    print("10. Reverse")
+    print("11. Exit")
 
     ch = int(input("Enter your choice = "))
 
@@ -169,6 +201,16 @@ while True:
         l1.display()
 
     elif ch == 8:
+        l1.count()
+
+    elif ch == 9:
+        key = int(input("Enter value to search = "))
+        l1.search(key)
+
+    elif ch == 10:
+        l1.reverse()
+
+    elif ch == 11:
         print("Program Exit")
         break
 
